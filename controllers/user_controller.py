@@ -9,14 +9,13 @@ from services.user_service import UserService
 
 @user_router.post("", response_model=UserResponse)
 def create_user(
-    user:NewUserSchema,
+    user: NewUserSchema,
     db: Session = Depends(get_db_instance)
 ):
 
-    return UserService.create_user(
-        user,
-        db
-    )
+    service = UserService(db)
+
+    return service.create_user(user)
 
 
 @user_router.get("", response_model=list[UserResponse])
@@ -24,7 +23,9 @@ def get_all_users(
     db: Session = Depends(get_db_instance)
 ):
 
-    return UserService.get_all_users(db)
+    service = UserService(db)
+
+    return service.get_all_users()
 
 
 @user_router.get("/{user_id}", response_model=UserResponse)
@@ -33,9 +34,10 @@ def get_user_by_id(
     db: Session = Depends(get_db_instance)
 ):
 
-    return UserService.get_user_by_id(
-        user_id,
-        db
+    service = UserService(db)
+
+    return service.get_user_by_id(
+        user_id
     )
 
 
@@ -46,10 +48,11 @@ def update_user(
     db: Session = Depends(get_db_instance)
 ):
 
-    return UserService.update_user(
+    service = UserService(db)
+
+    return service.update_user(
         user_id,
-        updated_user,
-        db
+        updated_user
     )
 
 
@@ -59,8 +62,8 @@ def delete_user(
     db: Session = Depends(get_db_instance)
 ):
 
-    return UserService.delete_user(
-        user_id,
-        db
-    )
+    service = UserService(db)
 
+    return service.delete_user(
+        user_id
+    )

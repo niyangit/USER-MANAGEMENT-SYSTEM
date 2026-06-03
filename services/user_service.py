@@ -1,27 +1,29 @@
-
-
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 
 from models.User import User
+from utils.bcrypt import bcrypt
 import schemas.user
 
 
 class UserService:
 
-    @staticmethod
-    def find_user_by_email(email: str, db: Session):
+    def __init__(self, db: Session):
+        self.db = db
 
-        return db.query(User).filter(
+    def find_user_by_email(self, email: str):
+
+        return self.db.query(User).filter(
             User.email == email
         ).first()
 
-    @staticmethod
-    def create_user(user: schemas.user.NewUserSchema, db: Session):
+    def create_user(
+        self,
+        user: schemas.user.NewUserSchema
+    ):
 
-        existing_user = UserService.find_user_by_email(
-            user.email,
-            db
+        existing_user = self.find_user_by_email(
+            user.email
         )
 
         if existing_user:
@@ -33,24 +35,27 @@ class UserService:
         new_user = User(
             name=user.name,
             email=user.email,
-            password=user.password
+            password=bcrypt.hash(
+                user.password
+            )
         )
 
-        db.add(new_user)
-        db.commit()
-        db.refresh(new_user)
+        self.db.add(new_user)
+        self.db.commit()
+        self.db.refresh(new_user)
 
         return new_user
 
-    @staticmethod
-    def get_all_users(db: Session):
+    def get_all_users(self):
 
-        return db.query(User).all()
+        return self.db.query(User).all()
 
-    @staticmethod
-    def get_user_by_id(user_id: int, db: Session):
+    def get_user_by_id(
+        self,
+        user_id: int
+    ):
 
-        user = db.query(User).filter(
+        user = self.db.query(User).filter(
             User.id == user_id
         ).first()
 
@@ -62,40 +67,39 @@ class UserService:
 
         return user
 
-    @staticmethod
     def update_user(
+        self,
         user_id: int,
-        updated_user: schemas.user.NewUserSchema,
-        db: Session
+        updated_user: schemas.user.NewUserSchema
     ):
 
-        user = UserService.get_user_by_id(
-            user_id,
-            db
+        user = self.get_user_by_id(
+            user_id
         )
 
         user.name = updated_user.name
         user.email = updated_user.email
-        user.password = updated_user.password
 
-        db.commit()
-        db.refresh(user)
+        user.password = bcrypt.hash(
+            updated_user.password
+        )
+
+        self.db.commit()
+        self.db.refresh(user)
 
         return user
 
-    @staticmethod
     def delete_user(
-        user_id: int,
-        db: Session
+        self,
+        user_id: int
     ):
 
-        user = UserService.get_user_by_id(
-            user_id,
-            db
+        user = self.get_user_by_id(
+            user_id
         )
 
-        db.delete(user)
-        db.commit()
+        self.db.delete(user)
+        self.db.commit()
 
         return {
             "message": "User deleted successfully"
