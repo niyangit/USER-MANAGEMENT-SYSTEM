@@ -186,7 +186,7 @@ Valid for 5 minutes.
             self.db.commit()
 
             link = (
-                "http://127.0.0.1:8000"
+                "https://user-management-system-36zz.onrender.com"
                 "/frontend/pages/reset_password.html"
                 f"?token={token}"
             )

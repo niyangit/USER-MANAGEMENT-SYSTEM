@@ -1,4 +1,4 @@
-const API='http://127.0.0.1:8000';
+const API='https://user-management-system-36zz.onrender.com';
 async function registerUser(){
  const r=await fetch(API+'/api/v1/users',{method:'POST',headers:{'Content-Type':'application/json'},
 body: JSON.stringify({
