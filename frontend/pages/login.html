@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html><head>
+<script src="https://cdn.tailwindcss.com"></script>
+<title>Login</title></head>
+<body class="bg-slate-100 min-h-screen flex items-center justify-center">
+<div class="bg-white p-8 rounded-xl shadow w-96">
+<h1 class="text-2xl font-bold mb-4">Login</h1>
+<input id="email" class="border p-2 w-full mb-3" placeholder="Email">
+<input id="password" type="password" class="border p-2 w-full mb-3" placeholder="Password">
+<button onclick="login()" class="bg-blue-600 text-white px-4 py-2 rounded w-full">Login</button>
+<a
+    href="forgot_password.html"
+    class="text-blue-600"
+>
+    Forgot Password?
+</a>
+<a href="register.html" class="block mt-3 text-blue-600">Register</a>
+</div>
+<script src="../js/auth.js"></script>
+
+</body></html>

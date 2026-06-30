@@ -89,3 +89,11 @@ class UserResponse(BaseModel):
 
     class Config:
         from_attributes = True
+class LoginSchema(BaseModel):
+
+    email: EmailStr
+
+    password: str = Field(
+        min_length=8,
+        max_length=20
+    )

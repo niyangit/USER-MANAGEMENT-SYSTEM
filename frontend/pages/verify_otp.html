@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Verify OTP</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-slate-100">
+
+    <div class="min-h-screen flex items-center justify-center">
+
+        <div class="bg-white p-8 rounded shadow w-96">
+
+            <h1 class="text-2xl font-bold mb-4">
+                Verify OTP
+            </h1>
+
+            <input
+                id="otp"
+                placeholder="Enter OTP"
+                class="w-full border p-2 mb-3 rounded"
+            >
+
+            <button
+                onclick="verifyOtp()"
+                class="w-full bg-green-600 text-white p-2 rounded"
+            >
+                Verify OTP
+            </button>
+
+        </div>
+
+    </div>
+
+    <script src="../js/verify_otp.js"></script>
+
+</body>
+
+</html>
