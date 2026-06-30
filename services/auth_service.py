@@ -19,9 +19,11 @@ from datetime import (
     timedelta
 )
 
-from utils.email import (
+'''from utils.email import (
     send_email
-)
+)'''
+
+from utils.email1 import send_email
 
 from jose import jwt
 
