@@ -7,12 +7,26 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
 
         response = await call_next(request)
 
+
         response.headers["Content-Security-Policy"] = (
+
+
             "default-src 'self'; "
-            "script-src 'self'; "
+            "script-src 'self' https://cdn.tailwindcss.com 'unsafe-inline'; "
             "style-src 'self' 'unsafe-inline'; "
-            "img-src 'self' data:;"
+            "img-src 'self' data:; "
+            "font-src 'self' data:; "
+            "connect-src 'self'; "
+            "object-src 'none'; "
+            "frame-ancestors 'none'; "
+            "base-uri 'self'; "
+            "form-action 'self';"
         )
+
+    
+
+
+       
 
         response.headers["X-Frame-Options"] = "DENY"
 
