@@ -97,3 +97,6 @@ app.include_router(user_router)
 app.include_router(
     auth_router
 )
+from utils.security_headers import SecurityHeadersMiddleware
+
+app.add_middleware(SecurityHeadersMiddleware)
